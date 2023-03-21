@@ -11,7 +11,8 @@ const userSchema = new mongoose.Schema({
     mobile:{type:String},
     password:{type:String},
     photo:{type:String},
-},{versionKey:false,timestamps:true});
+    createdDate:{type:Date,default:Date.now()}
+},{versionKey:false});
 
 const UsersModel = mongoose.model('users',userSchema);
 module.exports = UsersModel;
