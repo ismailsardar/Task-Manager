@@ -1,0 +1,58 @@
+/**
+ * task-menage projects / app create
+ * Date : 21/03/2023
+ * auth: Ismile Sardar
+ */
+
+// Basic Lib Import
+const express = require('express');
+const app = new express();
+const router = require('./src/routers/api');
+const bodyParser = require('body-parser');
+require('dotenv').config();
+
+// Security Middleware Lib Import
+const hpp = require('hpp');
+const cors = require('cors');
+const helmet= require('helmet');
+const rateLimiter = require('express-rate-limit');
+const mongoSanitize = require('express-mongo-sanitize');
+const xss = require('xss-clean');
+
+// Database Lib Import
+const mongoose = require('mongoose');
+
+// Security Middleware Implement
+app.use(cors());
+app.use(helmet());
+app.use(mongoSanitize());
+app.use(xss());
+app.use(hpp());
+app.use(express.json());
+app.use(express.urlencoded({extended:false}));
+
+// Body Parser Implement
+app.use(bodyParser.json());
+
+// Request Rate Limit
+const limiter = rateLimiter({window:15*60*100,max:3000});
+app.use(limiter);
+
+// Mongo DB Database Connection
+mongoose.connect(process.env.URL)
+        .then((value) =>{
+            console.log('Database Connected Success');
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+
+//Routing Implement
+app.use('/api/v1',router);
+
+//undefined routing handel
+app.use('*',(req,res)=>{
+    res.status(404).json({status:'failed',data:'Not Found'});
+});
+
+module.exports = app;
