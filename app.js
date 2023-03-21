@@ -3,7 +3,7 @@
  * Date : 21/03/2023
  * auth: Ismile Sardar
  */
-
+// localhost:5000/api/v1/registration
 // Basic Lib Import
 const express = require('express');
 const app = new express();
@@ -18,6 +18,7 @@ const helmet= require('helmet');
 const rateLimiter = require('express-rate-limit');
 const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
+const morgan = require('morgan');
 
 // Database Lib Import
 const mongoose = require('mongoose');
@@ -30,6 +31,7 @@ app.use(xss());
 app.use(hpp());
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
+app.use(morgan('dev'));
 
 // Body Parser Implement
 app.use(bodyParser.json());
