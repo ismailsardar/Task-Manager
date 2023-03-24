@@ -4,6 +4,7 @@
  * auth: Ismile Sardar
  */
 
+const jwt = require("jsonwebtoken");
 const UsersModel = require("../models/UsersModel");
 
 // registration
@@ -14,7 +15,57 @@ exports.registration = (req, res) => {
       res.status(200).json({ status: "success", data: data });
     })
     .catch((error) => {
-        // console.log(error)
+      // console.log(error)
       res.status(400).json({ status: "fail", data: error });
     });
+};
+
+//login
+exports.login = async (req, res) => {
+  let reqBody = req.body;
+  let result = await UsersModel.aggregate([
+    { $match: reqBody },
+    {
+      $project: {
+        _id: 0,
+        email: 1,
+        firstName: 1,
+        lastName: 1,
+        mobile: 1,
+        photo: 1,
+      },
+    },
+  ]);
+  // console.log(result.length);
+  if (!result) {
+    res.status(400).json({ status: "fail", data: error });
+  } else {
+    if (result.length > 0) {
+      let payload = {
+        exp: Math.floor(Date.now() / 1000) + 24 * 60 * 60,
+        data: result[0]["email"],
+      };
+      let token = jwt.sign(payload, "SecretKey1234567890");
+      res
+        .status(200)
+        .json({ status: "success", data: result[0], token: token });
+    } else {
+      res.status(401).json({ status: "unauthorized" });
+    }
+  }
+};
+
+// profileUpdate
+exports.profileUpdate = async (req, res) => {
+  try {
+    let email = req.headers["email"];
+    let reqBody = req.body;
+    let data = await UsersModel.updateOne({ email }, reqBody);
+    // console.log(updateData)
+    if (data) {
+      res.status(200).json({ status: "success", data: data });
+    }
+  } catch (error) {
+    res.status(400).json({ status: "fail", data: error });
+  }
 };
