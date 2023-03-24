@@ -6,6 +6,7 @@
 
 const express = require('express');
 const UsersControllers = require('../controllers/UsersControllers');
+const TasksController = require('../controllers/TasksController');
 const AuthVerify = require('../middleware/AuthVerifyMiddleware');
 const router = express.Router();
 
@@ -14,5 +15,8 @@ router.get('/demo',(req,res)=>{res.status(200).json({data:"Success Demo Routing!
 router.post('/registration',UsersControllers.registration);
 router.post('/login',UsersControllers.login);
 router.post('/profileUpdate',AuthVerify,UsersControllers.profileUpdate);
+
+//Task router
+router.post('/createTask',AuthVerify,TasksController.createTask);
 
 module.exports = router;

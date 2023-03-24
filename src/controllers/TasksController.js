@@ -11,13 +11,12 @@ exports.createTask = async (req, res) => {
   try {
     let reqBody = req.body;
     reqBody.email = req.headers["email"];
-    let data = TasksModel.create(reqBody);
-    if (!data) {
-        res.status(400).json({ status: "fail", data: error });
-      } else {
-        res.status(200).json({ status: "success", data: data });
-      }
+    let data = await TasksModel.create(reqBody);
+    if (data) {
+      res.status(200).json({ status: "success", data: data });
+    }
   } catch (error) {
     console.log(error);
+    res.status(400).json({ status: "fail", data: error.massage });
   }
 };
