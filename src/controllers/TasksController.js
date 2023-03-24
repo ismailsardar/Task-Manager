@@ -65,7 +65,7 @@ exports.updateStatus = async (req, res) => {
   }
 };
 
-// listTaskByStatus
+// list Task By Status
 exports.listTaskByStatus = (req, res) => {
   let { status } = req.params;
   let email = req.headers["email"];
@@ -77,10 +77,26 @@ exports.listTaskByStatus = (req, res) => {
         title: 1,
         description: 1,
         createdDate: {
-            $dateToString: { date: "$createdDate", format: "%d-%m-%Y" },
+          $dateToString: { date: "$createdDate", format: "%d-%m-%Y" },
         },
       },
     },
+  ])
+    .then((data) => {
+      res.status(200).json({ status: "success", data: data });
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(400).json({ status: "fail", data: error.massage });
+    });
+};
+
+// task Status Count
+exports.taskStatusCount = (req, res) => {
+  let email = req.headers["email"];
+  TasksModel.aggregate([
+    { $match: { email } },
+    { $group: { _id: "$status", sum: { $count: {} } } },
   ]).then((data) => {
       res.status(200).json({ status: "success", data: data });
     })
