@@ -46,9 +46,7 @@ exports.login = async (req, res) => {
         data: result[0]["email"],
       };
       let token = jwt.sign(payload, "SecretKey1234567890");
-      res
-        .status(200)
-        .json({ status: "success", data: result[0], token: token });
+      res.status(200).json({ status: "success", data: result[0], token: token });
     } else {
       res.status(401).json({ status: "unauthorized" });
     }
