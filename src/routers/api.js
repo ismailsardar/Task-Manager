@@ -11,9 +11,7 @@ const AuthVerify = require("../middleware/AuthVerifyMiddleware");
 const router = express.Router();
 
 router.get("/", (req, res) => {
-  res
-    .status(200)
-    .json({
+  res.status(200).json({
       status: "Success",
       data: "It's BackEnd. so use postman or client side. use /allTask"
     });
