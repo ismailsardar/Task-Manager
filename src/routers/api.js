@@ -25,7 +25,7 @@ router.post("/profileUpdate", AuthVerify, UsersControllers.profileUpdate);
 
 //Task router
 router.post("/createTask", AuthVerify, TasksController.createTask);
-router.get("/allTask",TasksController.allTask);
+router.get("/allTask",AuthVerify,TasksController.allTask);
 router.post("/deleteTask/:id", AuthVerify, TasksController.deleteTask);
 router.post(
   "/updateStatus/:id/:status",
