@@ -90,7 +90,7 @@ exports.profileDetails = async (req, res) => {
     ]);
     // console.log(updateData)
     if (result) {
-      res.status(200).json({ status: "success", data: data });
+      res.status(200).json({ status: "success", data: result[0] });
     }
   } catch (error) {
     res.status(400).json({ status: "fail", data: error });
