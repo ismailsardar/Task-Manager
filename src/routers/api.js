@@ -22,6 +22,7 @@ router.get("/", (req, res) => {
 router.post("/registration", UsersControllers.registration);
 router.post("/login", UsersControllers.login);
 router.post("/profileUpdate", AuthVerify, UsersControllers.profileUpdate);
+router.get("/profileDetails", AuthVerify, UsersControllers.profileDetails);
 
 //Task router
 router.post("/createTask", AuthVerify, TasksController.createTask);
