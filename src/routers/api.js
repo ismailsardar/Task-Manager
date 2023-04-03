@@ -27,6 +27,7 @@ router.get("/profileDetails", AuthVerify, UsersControllers.profileDetails);
 // Forget Password router
 router.get("/verifyEmail/:email", UsersControllers.RecoverVerifyEmail);
 router.get("/verifyOtp/:email/:otp", UsersControllers.VerifyOTP);
+router.post("/resetPassword", UsersControllers.ResetPassword);
 
 //Task router
 router.post("/createTask", AuthVerify, TasksController.createTask);

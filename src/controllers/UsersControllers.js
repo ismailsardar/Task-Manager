@@ -156,3 +156,25 @@ exports.VerifyOTP = async (req, res) => {
     res.status(400).json({ status: "fail", error: error.message });
   }
 };
+
+// Reset Password
+exports.ResetPassword = async (req, res) => {
+  let { email, otp, password } = req.body;
+  let status = 1;
+  try {
+    let otpCount = await OTPModel.aggregate([
+      { $match: { email, otp, status } },
+      { $count: "total" },
+    ]);
+
+    if (otpCount.length > 0) {
+      let updatePass = await UsersModel.updateOne({ email }, { password });
+      res.status(200).json({ status: "success", data: updatePass });
+    } else {
+      res.status(200).json({ status: "fail", data: "Invalid Request" });
+    }
+  } catch (error) {
+    // console.log(error);
+    res.status(400).json({ status: "fail", error: error.message });
+  }
+};
