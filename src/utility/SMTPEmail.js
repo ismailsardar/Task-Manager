@@ -18,7 +18,13 @@ const SendEmailUtility = async (EmailTo, EmailText, EmailSubject) => {
     from: "Task Manager MERN <testingsit420@outlook.com>",
     to: EmailTo,
     subject: EmailSubject,
-    text: EmailText,
+    // text: EmailText,
+    html:`<html>
+    <body style="font-family: Arial, sans-serif; font-size: 16px; line-height: 1.5; color: #333;">
+      <h1 style="font-size: 24px; margin-bottom: 20px; text-align: center;">${EmailText}</h1>
+      <p style="margin-bottom: 10px;"></p>      
+    </body>
+  </html>`
   };
 
   return await transport.sendMail(mailOptions);
