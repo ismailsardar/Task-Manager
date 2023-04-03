@@ -85,6 +85,7 @@ exports.profileDetails = async (req, res) => {
           lastName: 1,
           mobile: 1,
           photo: 1,
+          password:1,
         },
       },
     ]);
