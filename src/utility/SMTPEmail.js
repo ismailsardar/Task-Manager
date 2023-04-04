@@ -2,20 +2,19 @@ let nodemailer = require("nodemailer");
 
 const SendEmailUtility = async (EmailTo, EmailText, EmailSubject) => {
   let transport = nodemailer.createTransport({
-    host: "smtp-mail.outlook.com",
-    secureConnection: false,
-    port: 587,
-    auth: {
-      user: "testingsit420@outlook.com",
-      pass: "testing420sit#&d@",
-    },
-    tls: {
-      ciphers: "SSLv3",
-    },
+   host: 'mail.teamrabbil.com',
+        port: 25,
+        secure: false,
+        auth: {
+            user: "info@teamrabbil.com",
+            pass: '~sR4[bhaC[Qs'
+        },tls: {
+            rejectUnauthorized: false
+        },
   });
 
   let mailOptions = {
-    from: "Task Manager MERN <testingsit420@outlook.com>",
+    from: "Task Manager MERN <info@teamrabbil.com>",
     to: EmailTo,
     subject: EmailSubject,
     // text: EmailText,
