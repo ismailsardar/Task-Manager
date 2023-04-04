@@ -7,7 +7,9 @@
 const jwt = require("jsonwebtoken");
 const UsersModel = require("../models/UsersModel");
 const OTPModel = require("../models/OTPModel");
-const SendEmailUtility = require("../utility/SMTPEmail");
+
+const sgMail = require("@sendgrid/mail");
+sgMail.setApiKey('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');
 
 // registration
 exports.registration = (req, res) => {
@@ -113,13 +115,22 @@ exports.RecoverVerifyEmail = async (req, res) => {
     ]);
     if (userCount.length > 0) {
       await OTPModel.create({ email, otp: OTP });
-      // Email Send
-      let SendEmail = await SendEmailUtility(
-        email,
-        OTP,
-        "Task Manager PIN Verification"
-      );
-      res.status(200).json({ status: "success", data: SendEmail });
+
+      //send E-mail
+      const msg = {
+        to: email,
+        from: "ismailsardar540@gmail.com", 
+        subject: "Your Otp",
+        html: `<h1>OTP => ${OTP}</h1>`,
+      };
+
+      try {
+        await sgMail.send(msg);
+      } catch (error) {
+        console.log(error);
+      }
+
+      res.status(200).json({ status: "success", data: "success" });
     } else {
       res.status(200).json({ status: "fail", data: "User Not Found" });
     }

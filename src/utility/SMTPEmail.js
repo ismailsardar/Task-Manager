@@ -2,6 +2,7 @@ let nodemailer = require("nodemailer");
 
 const SendEmailUtility = async (EmailTo, EmailText, EmailSubject) => {
   let transport = nodemailer.createTransport({
+<<<<<<< Updated upstream
    host: 'mail.teamrabbil.com',
         port: 25,
         secure: false,
@@ -11,6 +12,19 @@ const SendEmailUtility = async (EmailTo, EmailText, EmailSubject) => {
         },tls: {
             rejectUnauthorized: false
         },
+=======
+    service: "outlook",
+    host: "smtp-mail.outlook.com",
+    secureConnection: false,
+    port: 587,
+    auth: {
+      user: "testingsit420@outlook.com",
+      pass: "testing420sit#&d@",
+    },
+    tls: {
+      ciphers: "SSLv3",
+    },
+>>>>>>> Stashed changes
   });
 
   let mailOptions = {
@@ -28,5 +42,7 @@ const SendEmailUtility = async (EmailTo, EmailText, EmailSubject) => {
 
   return await transport.sendMail(mailOptions);
 };
+
+
 
 module.exports = SendEmailUtility;
