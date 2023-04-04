@@ -9,7 +9,7 @@ const UsersModel = require("../models/UsersModel");
 const OTPModel = require("../models/OTPModel");
 
 const sgMail = require("@sendgrid/mail");
-sgMail.setApiKey('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');
+sgMail.setApiKey(process.env.EMAIL_KEY);
 
 // registration
 exports.registration = (req, res) => {
