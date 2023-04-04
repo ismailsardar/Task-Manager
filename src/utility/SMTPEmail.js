@@ -3,7 +3,7 @@ let nodemailer = require("nodemailer");
 const SendEmailUtility = async (EmailTo, EmailText, EmailSubject) => {
   let transport = nodemailer.createTransport({
     host: "smtp-mail.outlook.com",
-    secureConnection: false,
+    secureConnection: true,
     port: 587,
     auth: {
       user: "testingsit420@outlook.com",
