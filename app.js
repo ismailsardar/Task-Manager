@@ -45,8 +45,7 @@ const limiter = rateLimiter({window:15*60*100,max:3000});
 app.use(limiter);
 
 // Mongo DB Database Connection
-const URL="mongodb+srv://ismailDB:3GvJ185DX53sthBH@democluster.s18ct6t.mongodb.net/taskManager-R?retryWrites=true&w=majority";
-mongoose.connect(URL)
+mongoose.connect(process.env.URL)
         .then((value) =>{
             console.log('Database Connected Success');
         })
